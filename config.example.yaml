@@ -1,0 +1,70 @@
+# 每日自动化基金信息 + 股票信息采集配置
+
+# Tushare API 配置
+tushare:
+  token: "YOUR_TUSHARE_TOKEN_HERE"
+  # 注册地址: https://tushare.pro/register
+
+# 数据库配置
+database:
+  type: "sqlite"  # sqlite | postgresql
+  # SQLite 配置
+  sqlite:
+    path: "./data/finance.db"
+  # PostgreSQL 配置
+  postgresql:
+    host: "localhost"
+    port: 5432
+    database: "finance"
+    user: "postgres"
+    password: ""
+
+# 基金配置
+funds:
+  # 需要监控的基金列表
+  watch_list:
+    - code: "000001.OF"
+      name: "华夏成长混合"
+      amount: 1000  # 定投金额
+    - code: "110022.OF"
+      name: "易方达消费行业"
+      amount: 500
+
+# 股票配置
+stocks:
+  watch_list:
+    - code: "000001.SZ"
+      name: "平安银行"
+    - code: "600519.SH"
+      name: "贵州茅台"
+
+# 定投策略配置
+investment:
+  # 定投频率: daily | weekly | monthly
+  frequency: "weekly"
+  # 每周几定投 (0=周一, 4=周五)
+  day_of_week: 3  # 周四
+  # 每月几号定投
+  day_of_month: 1
+
+# 通知配置
+notify:
+  # 微信推送 (Server酱)
+  wechat:
+    enabled: false
+    send_key: ""
+  # 邮件通知
+  email:
+    enabled: false
+    smtp_server: "smtp.qq.com"
+    smtp_port: 465
+    sender: ""
+    password: ""
+    receiver: ""
+
+# 调度配置
+schedule:
+  # 数据采集时间 (24小时制)
+  collect_time: "16:30"  # 收盘后
+  # 定投执行时间
+  invest_time: "09:30"  # 开盘时
