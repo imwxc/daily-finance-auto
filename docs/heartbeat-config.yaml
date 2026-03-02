@@ -1,0 +1,52 @@
+# OpenClaw Heartbeat 调度配置示例
+# 将此配置添加到 OpenClaw 的 heartbeats 配置中
+
+heartbeats:
+  # 每日基金数据采集
+  - name: daily_fund_collect
+    schedule: "0 16 * * 1-5"    # 工作日下午 4 点（收盘后）
+    skill: fund-dca
+    action: |
+      cd ~/daily-finance-auto
+      source .venv/bin/activate
+      python -m src.main collect --type fund
+
+  # 每日定投信号检查
+  - name: daily_invest_check
+    schedule: "0 9 * * 1-5"     # 工作日早上 9 点
+    skill: fund-dca
+    action: |
+      cd ~/daily-finance-auto
+      source .venv/bin/activate
+      python -m src.main invest --notify
+
+  # 每周股票周报
+  - name: weekly_stock_report
+    schedule: "0 16 * * 5"      # 周五下午 4 点
+    skill: stock-portfolio
+    action: |
+      cd ~/daily-finance-auto
+      source .venv/bin/activate
+      python -m src.main collect --type stock
+      python -m src.main stocks
+
+# Telegram 命令示例
+telegram_commands:
+  - trigger: "定投"
+    response: |
+      正在检查定投信号...
+      {{execute: python -m src.main invest}}
+
+  - trigger: "股票"
+    response: |
+      正在查看股票列表...
+      {{execute: python -m src.main stocks}}
+
+  - trigger: "采集"
+    response: |
+      正在采集数据...
+      {{execute: python -m src.main collect}}
+
+  - trigger: "状态"
+    response: |
+      {{execute: python -m src.main status}}
