@@ -1,0 +1,12 @@
+name: fund-dca
+version: 1.0.0
+description: 基金定投监控和信号分析
+author: user
+tools:
+  - python
+  - bash
+triggers:
+  - schedule: "0 9 * * 1-5"  # 工作日早上9点
+  - keyword: "定投"
+  - keyword: "基金"
+  - keyword: "DCA"

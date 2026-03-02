@@ -1,0 +1,12 @@
+name: stock-portfolio
+version: 1.0.0
+description: 股票持仓分析和报告
+author: user
+tools:
+  - python
+  - bash
+triggers:
+  - schedule: "0 16 * * 5"  # 周五下午4点（收盘后）
+  - keyword: "股票"
+  - keyword: "持仓"
+  - keyword: "周报"
